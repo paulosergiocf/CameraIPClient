@@ -1,1 +1,1 @@
-from src.models.device import Device
+from src.models.devices import Device
