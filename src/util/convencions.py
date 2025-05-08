@@ -9,8 +9,8 @@ class Colors(Enum):
     COLOR_FONT_DEFAULT = "#F2F2F2"
 
 class Font(Enum):
-    ROBOTO = ('src/ui/RobotoMono-Regular.ttf', 11)
-    ROBOTO_TITLE = ('src/ui/RobotoMono-Regular.ttf', 13, 'bold')
+    ROBOTO = ('src/view/RobotoMono-Regular.ttf', 11)
+    ROBOTO_TITLE = ('src/view/RobotoMono-Regular.ttf', 13, 'bold')
 
 class Labels(Enum):
     TITLE = "CAMERA IP - RSTP"
