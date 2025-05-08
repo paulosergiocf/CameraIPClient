@@ -1,9 +1,11 @@
 import cv2
 from PIL import Image
-
+from src.util.encript import Encript
 from src.models.devices import Device
+from src.util.logger import Logger
 
 class DeviceManager:
+    LOGGER = Logger("DeviceManager")
     def __init__(self, device: Device):
         self.device: Device = device
         self.string_connection = None
@@ -16,13 +18,14 @@ class DeviceManager:
         Returns:
             str: string de conexão RSTP
         """
-        return f'rtsp://{self.device.host}:{self.device.port}/user={self.device.username}&password={self.device.password}&channel=1&stream=0'
+        return f'rtsp://{self.device.host}:{self.device.port}/user={self.device.username}&password={Encript.decrypt_AES_CBC(self.device.password)}&channel=1&stream=0'
 
     def validate_str_connection(self):
        
         self.videocapture = cv2.VideoCapture(self.__get_string_connection())
         
         if not self.videocapture.isOpened():
+            self.LOGGER.error(f"Não foi possivel estabelecer conexão com o dispositivo {self.device.name_device}")
             self.videocapture = None
 
     def update_frame(self, frame_width: int, frame_height: int):
@@ -38,14 +41,18 @@ class DeviceManager:
             - Transforma o quadro em uma imagem PIL.
             - Redimensiona o quadro para as dimensões especificadas usando o filtro LANCZOS.
         """
-        
-        if not self.videocapture:
-            self.videocapture = cv2.VideoCapture(self.__get_string_connection())
+        try:
+            if not self.videocapture:
+                self.videocapture = cv2.VideoCapture(self.__get_string_connection())
 
-        done, image_array = self.videocapture.read()
+            done, image_array = self.videocapture.read()
 
-        if done:
-            image_array = cv2.cvtColor(image_array, cv2.COLOR_BGR2RGB)
-            image_array = Image.fromarray(image_array)
+            if done:
+                image_array = cv2.cvtColor(image_array, cv2.COLOR_BGR2RGB)
+                image_array = Image.fromarray(image_array)
 
-            self.resized_frame = image_array.resize((frame_width, frame_height), Image.LANCZOS)
+                self.resized_frame = image_array.resize((frame_width, frame_height), Image.LANCZOS)
+                
+        except Exception as error:
+            self.LOGGER.error(error)
+

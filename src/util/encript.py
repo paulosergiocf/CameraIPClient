@@ -17,6 +17,7 @@ class Encript():
 
     @staticmethod
     def decrypt_AES_CBC(ciphertext):
+        
         decryptor = Cipher(algorithms.AES(Contants.KEY.value), modes.CBC(Contants.VETOR.value), backend=default_backend()).decryptor()
         decrypted_data = decryptor.update(ciphertext) + decryptor.finalize()
 
