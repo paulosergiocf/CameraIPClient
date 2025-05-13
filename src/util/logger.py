@@ -37,7 +37,7 @@ class Logger(logging.Logger):
         super().warning(msg=f"{self.nome} - {msg}.")
 
     def error(self, msg):
-        super().error(msg=f"{self.nome} - {msg}.")
+        super().error(msg=f"{self.nome} - {msg}.", exc_info=True)
     
 
     def __create_path(self, diretorio: str):
