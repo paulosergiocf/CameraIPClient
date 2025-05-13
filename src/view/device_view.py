@@ -1,4 +1,3 @@
-import threading
 import tkinter as tk
 from PIL import Image, ImageTk
 from src.models.manager.device_manager import DeviceManager
@@ -13,7 +12,6 @@ class ViewDevice(tk.Frame):
         self.device_manager: DeviceManager = None
         self.width=int(width)
         self.height=int(height)
-        self.task = threading.Thread(target=self.connect)
         self.initalize()
 
 
@@ -63,10 +61,12 @@ class ViewDevice(tk.Frame):
         self.grid_frame = tk.Frame(self)
         self.grid_frame.pack(fill=tk.BOTH, expand=True)
 
+
     def connect(self):
         self.__create_grid()
-        button = tk.Button(self.grid_frame, bg=self.cget('bg'), fg="white")
-        button.pack()
+        self.connection_button = tk.Button(self.grid_frame, bg=self.cget('bg'), fg="white", highlightbackground="green", highlightthickness=1 )
+        self.connection_button.pack()
+        
         def update_frame():
             try:
                 if self.device_manager.videocapture is None or not self.device_manager.videocapture.isOpened():
@@ -77,10 +77,10 @@ class ViewDevice(tk.Frame):
 
                     if self.device_manager.resized_frame is not None:
                         imgtk = ImageTk.PhotoImage(image=self.device_manager.resized_frame)
-                        button.imgtk = imgtk
-                        button.configure(image=imgtk)
+                        self.connection_button.imgtk = imgtk
+                        self.connection_button.configure(image=imgtk)
 
-                    button.after(10, update_frame)
+                    self.connection_button.after(10, update_frame)
                     break
 
             except Exception as e:
