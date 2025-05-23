@@ -8,7 +8,7 @@
    height="650"
    viewBox="0 0 651 650"
    sodipodi:docname="disconect.svg"
-   inkscape:version="1.4.1 (93de688d07, 2025-03-30)"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
    xml:space="preserve"
    inkscape:export-filename="disconect.png"
    inkscape:export-xdpi="96"
@@ -29,7 +29,7 @@
      inkscape:zoom="0.88437358"
      inkscape:cx="236.32547"
      inkscape:cy="386.7144"
-     inkscape:window-width="1865"
+     inkscape:window-width="2505"
      inkscape:window-height="1012"
      inkscape:window-x="0"
      inkscape:window-y="0"
@@ -62,7 +62,7 @@
        x="-0.0055057993"
        y="-0.0046703629"
        ry="0"
-       inkscape:export-filename="disconect.png"
+       inkscape:export-filename="disconnected.png"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96" /><g
        id="g2"
@@ -100,11 +100,11 @@
        id="path9" /><text
        xml:space="preserve"
        style="font-weight:bold;font-stretch:condensed;font-size:37.3333px;line-height:115.448px;font-family:'DIN 1451 Std';-inkscape-font-specification:'DIN 1451 Std Bold Condensed';text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#ac9393;fill-opacity:1;stroke:none;stroke-width:12.007;stroke-opacity:0.410648"
-       x="259.86246"
+       x="248.72461"
        y="437.90405"
        id="text3"><tspan
          sodipodi:role="line"
          id="tspan3"
-         x="259.86246"
+         x="248.72461"
          y="437.90405"
-         style="font-size:37.3333px;line-height:115.448px;fill:#ac9393">DISCONECT</tspan></text></g></svg>
+         style="font-size:37.3333px;line-height:115.448px;fill:#ac9393">DISCONNECTED</tspan></text></g></svg>

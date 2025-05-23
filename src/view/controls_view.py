@@ -59,8 +59,8 @@ class ControlsViewDevice(tk.Frame):
         self.botao_mng_device.image = img_edit
         self.botao_mng_device.pack(side='left', padx=5)
 
-        img_default = PhotoImage(file="img/default.png")
-        self.botao_disconnect = tk.Button(
+        img_default = PhotoImage(file="img/refresh.png")
+        self.botao_refresh = tk.Button(
             constrols,
             image=img_default,
             font=Font.ROBOTO,
@@ -71,5 +71,5 @@ class ControlsViewDevice(tk.Frame):
             highlightthickness=1 
 
         )
-        self.botao_disconnect.image = img_default
-        self.botao_disconnect.pack(side='left', padx=5)
+        self.botao_refresh.image = img_default
+        self.botao_refresh.pack(side='left', padx=5)
