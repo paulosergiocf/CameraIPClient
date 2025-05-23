@@ -1,8 +1,7 @@
-
-from src.util.encript import Encript
-from src.util.logger import Logger
 import tkinter as tk
 from tkinter import PhotoImage, ttk
+from src.util.encript import Encript
+from src.util.logger import Logger
 from src.util.convencions import Colors, Font, Labels
 from src.models.repositories.devices_repository import DeviceRepository
 from src.models.manager.device_manager import DeviceManager
@@ -12,6 +11,7 @@ from src.view.device_view import ViewDevice
 from src.view.edit_device import DeviceViewCrud
 from src.view.grid_view import ViewGrid
 from src.view.layout_view import Layout
+from src.view.messagebox import Messagebox
 from src.view.table_device_view import TableDeviceView
 from src.view.title_view import Title
 
@@ -55,6 +55,7 @@ class App(tk.Frame):
         self.container_main = tk.Frame(self.main, bg=Colors.DARK_GRAY.value)
         self.container_main.pack(fill="both", expand=True)
         
+        
         # Título
         container_title = tk.Frame(self.container_main, bg=Colors.DARK_GRAY.value)
         container_title.pack(fill="x", pady=10)
@@ -68,28 +69,16 @@ class App(tk.Frame):
         # Dashboard (lado esquerdo)
         self.layout = Layout(frame=container_content)
         self.layout.dashboard.pack(side="left", fill="y", padx=5)
-
-        devices = list(DeviceRepository.get_all())
-
         self.container_row1 = tk.Frame(self.layout.dashboard, bg=Colors.DARK_GRAY.value)
         self.container_row1.pack()
-        self.__update_table()
-
         self.container_row2 = tk.Frame(self.layout.dashboard, bg=Colors.DARK_GRAY.value)
         self.container_row2.pack()
-        self.controls_device = ControlsViewDevice(frame=self.container_row2)
-        self.controls_device.botao_view.config(command=self.__view_full_image)
-        self.controls_device.botao_disconnect.config(command=self.__close)
-        self.controls_device.botao_mng_device.config(command=self.__edit_device_view)
-        self.controls_device.pack()
-
-        # Conteúdo (lado direito)
-        self.layout.content.pack(side="right", fill="both", expand=True, padx=5, pady=5)
-        self.__create_grid(devices)
         self.container_row3 = tk.Frame(self.layout.dashboard, bg=Colors.DARK_GRAY.value)
         self.container_row3.pack()
+        self.container_row4 = tk.Frame(self.layout.dashboard, bg=Colors.DARK_GRAY.value)
+        self.container_row4.pack()
         botao_test = tk.Button(
-            self.container_row3,
+            self.container_row4,
             text="Sair",
             relief="flat",
             font=Font.ROBOTO,
@@ -98,9 +87,27 @@ class App(tk.Frame):
             fg=Colors.COLOR_FONT_DEFAULT.value,
             width=20,
             height=1,
-            command=quit
+            command=self.quit
         )
         botao_test.pack(pady=10)
+
+        devices = list(DeviceRepository.get_all())
+
+        self.__update_table()
+
+    
+        self.controls_device = ControlsViewDevice(frame=self.container_row2)
+        self.controls_device.botao_view.config(command=self.__view_full_image)
+        self.controls_device.botao_refresh.config(command=self.__close)
+        self.controls_device.botao_mng_device.config(command=self.__edit_device_view)
+        self.controls_device.botao_refresh.config(command=self.__create_grid)
+        self.controls_device.pack()
+
+        # Conteúdo (lado direito)
+        self.layout.content.pack(side="right", fill="both", expand=True, padx=5, pady=5)
+        self.__create_grid(devices)
+        
+        
 
     def __create_grid(self, devices: list = None):
         if not devices:
@@ -109,11 +116,9 @@ class App(tk.Frame):
         self.view_image = PhotoImage(file="img/full.png")
         self.controls_device.botao_view.config(image=self.view_image, command=self.__view_full_image)
         
-
         self.create_container_tmp(self.layout.content)
         content_devices = ViewGrid(self.container_content_base)
         content_devices.pack(fill="both", expand=True)
-        self.controls_device.botao_disconnect.config(state=tk.DISABLED)
 
         content_devices.create_grid()
         for index_device in range(0,6):
@@ -132,13 +137,15 @@ class App(tk.Frame):
             
     def __view_full_image(self):
         if not self.table.selected_item:
+            Messagebox("Nenhum dispositivo selecionado!")
             return
         
         self.view_image = PhotoImage(file="img/low.png")
         self.controls_device.botao_view.config(image=self.view_image, command=self.__create_grid)
         
         self.create_container_tmp(self.layout.content)
-        self.controls_device.botao_disconnect.config(state=tk.ACTIVE)
+        self.controls_device.botao_refresh.config(command=self.__view_full_image)
+        
 
         width_grid, heigth_grid = self.__get_width_frame(self), self.__get_height_frame(self)
 
@@ -173,6 +180,7 @@ class App(tk.Frame):
             self.screen.bnt_uptade.config(state=tk.DISABLED)
             self.screen.entry_id.config(state=tk.DISABLED)
         else:
+            self.screen.bnt_insert.config(state=tk.DISABLED)
             device = DeviceRepository.get_by_id(self.table.selected_item)
             self.screen.entry_id.insert(0, device.id)
             self.screen.entry_name.insert(0, device.name_device)
@@ -208,6 +216,7 @@ class App(tk.Frame):
 
         self.__clear_entries()
         self.__update_table()
+        Messagebox("Dispositivo adicionado com sucesso!")
 
     def __delete_device(self):
         id_device = Validation.integer(self.screen.entry_id.get())
@@ -215,6 +224,7 @@ class App(tk.Frame):
         self.__clear_entries()
         self.__update_table()
         self.__create_grid()
+        Messagebox("Dispositivo removido com sucesso!")
 
     def __update_device(self):
         id_device = Validation.integer(entry=self.screen.entry_id.get())
@@ -232,6 +242,7 @@ class App(tk.Frame):
         self.__clear_entries()
         self.__update_table()
         self.__create_grid()
+        Messagebox("Dispositivo atualizado com sucesso!")
     
     def __clear_entries(self):
         self.screen.entry_id.delete(0, tk.END)
@@ -241,16 +252,7 @@ class App(tk.Frame):
         self.screen.entry_username.delete(0, tk.END)
         self.screen.entry_password.delete(0, tk.END)
         
-
-    # -- UTIL VIEW ---
-
-    def create_container_main(self):
-        for widget in self.winfo_children():
-            widget.destroy()
-
-        self.container_main = tk.Frame(self.main, bg=Colors.DARK_GRAY.value)
-        self.container_main.pack(fill="both", expand=True)
-
+    # ------------------------------------------------
     def create_container_tmp(self, frame):
         if hasattr(self, 'container_content_base') and self.container_content_base:
             self.container_content_base.destroy()

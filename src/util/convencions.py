@@ -1,7 +1,4 @@
 from enum import Enum
-from dotenv import load_dotenv
-load_dotenv()
-import os
 
 class Colors(Enum):
     DARK_GRAY = "#353535"
@@ -13,10 +10,11 @@ class Font(Enum):
     ROBOTO_TITLE = ('src/view/RobotoMono-Regular.ttf', 13, 'bold')
 
 class Labels(Enum):
-    TITLE = "CAMERA IP - RSTP"
+    TITLE = "Cameras IP - RSTP"
+    
 
 class Contants(Enum):
     ENCONDING = 'utf-8'
-    KEY= bytes(os.environ["KEY"], ENCONDING)
-    VETOR=bytes(os.environ["VETOR"], ENCONDING)
+    KEY= b'lv7oVYE8bvsSl466'
+    VETOR=b'cIp6LlipSkGVNowd'
     

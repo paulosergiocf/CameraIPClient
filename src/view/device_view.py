@@ -4,7 +4,6 @@ from src.models.manager.device_manager import DeviceManager
 from src.util.convencions import Colors
 from src.util.logger import Logger
 
-
 class ViewDevice(tk.Frame):
     def __init__(self, frame: tk.Frame, width: int = 800, height: int = 800, background: str = Colors.DARK_GRAY.value):
         super().__init__(frame, bg=background, width=width, height=height, border=1)
@@ -13,7 +12,6 @@ class ViewDevice(tk.Frame):
         self.width=int(width)
         self.height=int(height)
         self.initalize()
-
 
     def initalize(self):
         if not self.device_manager:
@@ -24,7 +22,6 @@ class ViewDevice(tk.Frame):
     def set_device(self, device: DeviceManager):
         self.device_manager: DeviceManager  = device
 
-    
     def not_conection(self):
         canvas = tk.Canvas(self, width=self.width, height=self.height, bg="black", highlightthickness=0)
         canvas.pack(fill=tk.BOTH, expand=True)
@@ -44,7 +41,7 @@ class ViewDevice(tk.Frame):
         canvas = tk.Canvas(self, width=self.width, height=self.height, bg="black", highlightthickness=0)
         canvas.pack(fill=tk.BOTH, expand=True)
 
-        image = Image.open("img/disconect.png")
+        image = Image.open("img/disconnected.png")
         bg_image = ImageTk.PhotoImage(image)
 
         image_width, image_height = bg_image.width(), bg_image.height()
@@ -60,7 +57,6 @@ class ViewDevice(tk.Frame):
         
         self.grid_frame = tk.Frame(self)
         self.grid_frame.pack(fill=tk.BOTH, expand=True)
-
 
     def connect(self):
         self.__create_grid()
@@ -90,5 +86,4 @@ class ViewDevice(tk.Frame):
 
         update_frame()
 
-    
             
