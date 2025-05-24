@@ -77,7 +77,7 @@ class App(tk.Frame):
         self.container_row3.pack()
         self.container_row4 = tk.Frame(self.layout.dashboard, bg=Colors.DARK_GRAY.value)
         self.container_row4.pack()
-        botao_test = tk.Button(
+        button_quit = tk.Button(
             self.container_row4,
             text="Sair",
             relief="flat",
@@ -89,7 +89,7 @@ class App(tk.Frame):
             height=1,
             command=self.quit
         )
-        botao_test.pack(pady=10)
+        button_quit.pack(pady=10)
 
         devices = list(DeviceRepository.get_all())
 

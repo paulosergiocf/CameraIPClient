@@ -174,3 +174,4 @@ cython_debug/
 .vscode
 .svg
 rascunho.py
+build.json

@@ -1,5 +1,7 @@
 # Camera IP - RSTP
 
+![Logo](img/logo.png)
+
 ## Introdução
 
 À medida que as câmeras IPs se popularizaram, muitas pessoas passaram a ter acesso e instalar esses dispositivos em suas residências. Apesar da facilidade de instalação, acabam se tornando reféns de aplicativos que muitas vezes exigem pagamento, restringem o monitoramento a uma única marca de dispositivos ou necessitam de conexão com a internet/smartphone para utilização.
@@ -11,8 +13,7 @@ O foco desta aplicação são usuários linux, pois estes possuem menos opções
 
 ## Capturas de tela
 
-![alt text](image.png)
-
+![captura de tela](https://github.com/user-attachments/assets/89ef9c1b-d351-44e4-a0fd-57e4288d64af)
 
 
 ## Ambiente de desenvolvimento
