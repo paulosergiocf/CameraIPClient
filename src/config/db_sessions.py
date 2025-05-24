@@ -25,6 +25,8 @@ def create_engine(sqlite: bool = False) -> Engine:
 
         conn_str = f'sqlite:///{arquivo_db}'
         __engine = sa.create_engine(url=conn_str, echo=False, connect_args={"check_same_thread":False})
+        if not Path(arquivo_db).exists():
+            create_tables()
     
     else:
         conn_str = f'postgresql://{os.environ["USERPG"]}:{os.environ["PASSPG"]}@{os.environ["HOST"]}:{os.environ["PORT"]}/{os.environ["DATABASE"]}'
